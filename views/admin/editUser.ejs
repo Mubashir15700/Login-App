@@ -1,0 +1,39 @@
+<%- include("../partials/header") %>
+    <div class="container-fluid rounded w-50 mt-5 p-5 border border-2">
+        <h2>Edit User</h2>
+        <form action="/admin/editUser/<%= user._id %>?_method=PUT" method="POST" id="edit-form">
+            <div class="mb-3 mt-4">
+                <label for="exampleFormControlInput1" class="form-label">User Name</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" name="username"
+                    value="<%= user.username %>">
+            </div>
+            <div class="mb-3">
+                <label for="inputPhone5" class="form-label">Phone</label>
+                <input type="number" id="inputPhone5" class="form-control" aria-describedby="phoneHelpBlock"
+                    name="phone" value="<%= user.phone %>">
+            </div>
+            <p class="text-danger" id="error-display"></p>
+            <p class="text-danger">
+                <%= error %>
+            </p>
+            <button type="submit" class="btn btn-dark btn-lg">Edit</button>
+        </form>
+    </div>
+    <script>
+        const form = document.getElementById('edit-form');
+        const usernameInput = document.getElementById('exampleFormControlInput1');
+        const phoneInput = document.getElementById('inputPhone5');
+
+        form.addEventListener('submit', (event) => {
+            if (!usernameInput.value || !phoneInput.value) {
+                event.preventDefault();
+                document.getElementById("error-display").innerHTML = "Please fill in all fields.";
+            } else {
+                if (phoneInput.value.length !== 10) {
+                    event.preventDefault();
+                    document.getElementById("error-display").innerHTML = "Enter valid phone number.";
+                }
+            }
+        });
+    </script>
+<%- include("../partials/footer") %>

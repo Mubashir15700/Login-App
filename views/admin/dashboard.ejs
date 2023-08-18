@@ -1,0 +1,47 @@
+<%- include("../partials/header") %>
+    <div class="container border p-5 mt-5">
+        <h1>Dashboard</h1>
+        <div class="d-flex bg-dark p-3 justify-content-between">
+            <h4 class="text-light">All Users</h4>
+            <a class="btn btn-primary" href="/admin/addUser">Add User</a>
+            <div class="input-group w-50">
+                <form class="d-flex" action="/admin/search-user" method="post">
+                    <input type="text" class="form-control" placeholder="Search username" aria-label="Recipient's username"
+                        aria-describedby="button-addon2" name="username">
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+                </form>
+            </div>
+        </div>
+        <table class="table mt-5">
+            <tr>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Actions</th>
+            </tr>
+            <% if (!users.length) { %>
+                <tr>No users found.</tr>
+            <% } else { %>
+                <% users.forEach((user)=> { %>
+                    <tr>
+                        <td>
+                            <%= user.username %>
+                        </td>
+                        <td>
+                            <%= user.phone %>
+                        </td>
+                        <td>
+                            <a class="btn btn-warning" href="/admin/edit-user/<%= user._id %>">Edit</a>
+                            <form class="d-inline" action="/admin/delete-user/<%= user._id %>?_method=DELETE" method="POST">
+                                <button class="btn btn-danger" type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }); %>
+            <% } %>
+        </table>
+
+        <form class="mt-5" action="/admin/logout" method="post">
+            <button type="submit" class="btn btn-dark btn-lg">Logout</button>
+        </form>
+    </div>
+<%- include("../partials/footer") %>

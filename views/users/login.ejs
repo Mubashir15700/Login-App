@@ -1,0 +1,36 @@
+<%- include("../partials/header") %>
+    <div class="container-fluid rounded w-50 mt-5 p-5 border border-2">
+        <img src="/images/key.png" width="100px" height="100px" alt="logo">
+        <form action="/user/login" method="POST" id="login-form">
+            <div class="mb-3 mt-4">
+                <label for="exampleFormControlInput1" class="form-label">User Name</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" name="username">
+            </div>
+            <div class="mb-3">
+                <label for="inputPassword5" class="form-label">Password</label>
+                <input type="password" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock" name="password">
+            </div>
+            <p class="text-danger" id="error-display"></p>
+            <p class="text-danger"><%= error %></p>
+            <button type="submit" class="btn btn-dark btn-lg">Login</button>
+            <p>Don't have an account? <a href="/register">Register</a></p>
+            <p>Login as <a href="/admin/login">Admin</a></p>
+        </form>
+    </div>
+    <script>
+        const form = document.getElementById('login-form');
+        const usernameInput = document.getElementById('exampleFormControlInput1');
+        const passwordInput = document.getElementById('inputPassword5');
+
+        form.addEventListener('submit', (event) => {
+            if (!usernameInput.value || !passwordInput.value) {
+                event.preventDefault();
+                document.getElementById("error-display").innerHTML = "Please fill in all fields.";
+                console.log(passwordInput.value.length);
+            } else if (passwordInput.value.length < 6) {
+                event.preventDefault();
+                document.getElementById("error-display").innerHTML = "Password must be at least 6 characters long.";
+            }
+        });
+    </script>
+<%- include("../partials/footer") %>
